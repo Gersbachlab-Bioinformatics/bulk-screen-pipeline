@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# But not these files...
+!*.txt
+!*.md
+!*.R
+!*.sh
+!.gitignore
+
+# And not these directories
+!*/
+
+# Optional: Ignore specific files or directories if needed
+# .DS_Store (for macOS)
+# Thumbs.db (for Windows)
