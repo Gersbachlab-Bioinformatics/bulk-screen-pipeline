@@ -1,8 +1,8 @@
 name: custom-alignment-pipeline
 channels:
-  - bioconda
   - conda-forge
-  - defaults
+  - bioconda
+  - nodefaults
 dependencies:
   - bowtie2>=2.5
   - samtools>=1.17
