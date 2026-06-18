@@ -40,6 +40,10 @@ $5: Number of bp to trim from the 3' end (read_length - barcode_length)
 $6: Barcodes FASTA file [Optional, only required the first time to build the index]
 ```
 
+By default the script uses all available CPUs for `Bowtie2` and `samtools sort`
+(detected via `getconf _NPROCESSORS_ONLN`). Set the `THREADS` environment
+variable to override, e.g. `THREADS=4 ./alignment-barcode-SE-no-reverse-comp.sh ...`.
+
 ### Usage
 
 The first time, pass the barcodes FASTA file so the Bowtie2 index is built:
