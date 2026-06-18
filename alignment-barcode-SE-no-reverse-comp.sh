@@ -44,7 +44,7 @@ bowtie2 \
 	-U $2/$3 `# FASTQ file with reads to align` \
 | samtools view -b - > $4.bam `# Save BAM file` \
 && samtools sort \
-	-@ 32 `# Using 32 CPUs, adjust as needed` \
+	-@ 2 `# Using 32 CPUs, adjust as needed` \
 	-m 2G `# Memory per thread, adjust as needed` \
 	$4.bam \
 	-o $4.sorted.bam  \
@@ -54,7 +54,7 @@ bowtie2 \
 	| grep -v "^\*" \
 	> $4.counts.txt.tmp \
 && mv $4.counts.txt.tmp $4.counts.txt
-
+ls -lah $4.counts.txt
 # Create shuffled BAM file for library complexity estimation
 samtools bamshuf $4.sorted.bam $4.shuffle
 
