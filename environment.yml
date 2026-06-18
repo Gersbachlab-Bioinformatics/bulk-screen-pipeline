@@ -4,8 +4,8 @@ channels:
   - bioconda
   - nodefaults
 dependencies:
-  - bowtie2>=2.5
-  - samtools>=1.17
-  - bioconductor-deseq2
-  - r-argparse
-  - python>=3.9
+  - python=3.11
+  - bowtie2=2.5.4
+  - samtools=1.23.1
+  - bioconductor-deseq2=1.50.2
+  - r-argparse=2.3.1
