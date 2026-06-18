@@ -20,7 +20,7 @@ jobs:
       - uses: conda-incubator/setup-miniconda@v3
         with:
           mamba-version: "*"
-          channels: conda-forge,bioconda
+          channels: conda-forge,bioconda,nodefaults
           channel-priority: strict
           environment-file: environment.yml
           activate-environment: custom-alignment-pipeline
