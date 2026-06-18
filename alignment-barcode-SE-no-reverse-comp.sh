@@ -41,18 +41,18 @@ bowtie2 \
 	-X 200 `# to reveal chimeric alignments, but faster than the 500bp default` \
 	-x $1 `# Bowtie2 index basename` \
 	-U $2/$3 `# FASTQ file with reads to align` \
-| samtools view -bS - > $4.bam `# Save BAM file` \
+| samtools view -b - > $4.bam `# Save BAM file` \
 && samtools sort \
 	-@ 32 `# Using 32 CPUs, adjust as needed` \
 	-m 2G `# Memory per thread, adjust as needed` \
 	$4.bam \
 	-o $4.sorted.bam  \
 && samtools index $4.sorted.bam \
-&& samtools idxstats `# Extract count table for each barcode in the reference` \
-	$4.sorted.bam \
+&& samtools idxstats $4.sorted.bam \
 	| awk '{print $1"\t"$3}' \
 	| grep -v "^\*" \
-> $4.counts.txt
+	> $4.counts.txt.tmp \
+&& mv $4.counts.txt.tmp $4.counts.txt
 
 # Create shuffled BAM file for library complexity estimation
 samtools bamshuf $4.sorted.bam $4.shuffle
