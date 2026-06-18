@@ -19,6 +19,10 @@ set -euo pipefail
 
 TRIM=${5:-1}
 
+# Number of threads to use. Defaults to the number of available CPUs
+# (portable across Linux and macOS); override by exporting THREADS.
+THREADS=${THREADS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1)}
+
 # Build Bowtie2 custom reference index if it doesn't exist
 if [[ ! -e $1.1.bt2 ]];
 then
@@ -35,7 +39,7 @@ perform_alignment ()
 bowtie2 \
 	--very-sensitive \
 	--end-to-end \
-	--threads 32 `# Using 32 CPUs, adjust as needed` \
+	--threads "$THREADS" `# Use all available CPUs (override with THREADS env var)` \
 	--norc `# Do not try to map reverse complements` \
 	-3 $5 `# Trim $5 bp from the 3' end so only the barcode is aligned` \
 	-I 0 `# no minimum length alignment` \
@@ -44,7 +48,7 @@ bowtie2 \
 	-U $2/$3 `# FASTQ file with reads to align` \
 | samtools view -b - > $4.bam `# Save BAM file` \
 && samtools sort \
-	-@ 2 `# Using 32 CPUs, adjust as needed` \
+	-@ "$THREADS" `# Use all available CPUs (override with THREADS env var)` \
 	-m 2G `# Memory per thread, adjust as needed` \
 	$4.bam \
 	-o $4.sorted.bam  \
@@ -54,7 +58,7 @@ bowtie2 \
 	| grep -v "^\*" \
 	> $4.counts.txt.tmp \
 && mv $4.counts.txt.tmp $4.counts.txt
-ls -lah $4.counts.txt
+
 # Create shuffled BAM file for library complexity estimation
 samtools bamshuf $4.sorted.bam $4.shuffle
 
