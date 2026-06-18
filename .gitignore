@@ -6,11 +6,13 @@
 !*.md
 !*.R
 !*.sh
+!*.py
+!*.yml
 !.gitignore
 
 # And not these directories
 !*/
 
-# Optional: Ignore specific files or directories if needed
-# .DS_Store (for macOS)
-# Thumbs.db (for Windows)
+# Small test fixtures committed to the repo
+!test/data/*.small.fastq.gz
+!test/data/tf.orf.lib.fa.gz

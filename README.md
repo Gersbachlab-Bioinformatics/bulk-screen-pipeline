@@ -1,7 +1,6 @@
-# Simple bulk screen analysis
+# Custom alignment pipeline
 
-Scripts to align barcoded bulk screen reads and detect differential barcode
-abundance between sorted bins. The workflow has two steps: align reads and
+Scripts to align reads to a custom reference (e.g. barcode sequences, protospacer sequences, etc.) and detect differential abundance. The workflow has two steps: align reads and
 count barcodes with `Bowtie2`/`samtools`, then run `DESeq2` on the combined
 counts table.
 

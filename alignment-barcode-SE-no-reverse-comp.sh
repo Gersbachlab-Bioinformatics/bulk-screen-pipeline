@@ -7,11 +7,16 @@
 # $4: Output basename
 # $5: Number of bp to trim from the 3' end of each read
 #     (i.e. read_length - barcode_length, so only the barcode is aligned)
+#     Defaults to 1 if not provided. Use 0 when reads are exactly barcode length,
+#     but note that with --end-to-end bowtie2 will penalise any overhanging bases,
+#     so alignment rates will drop significantly if reads are longer than barcodes.
 # $6: Barcodes FASTA file [Optional, only required the first time to build the index]
 
 ## dependencies:
 # - samtools >=1.3.1
 # - bowtie2 >=2.3.5.1
+
+TRIM=${5:-1}
 
 # Build Bowtie2 custom reference index if it doesn't exist
 if [[ ! -e $1.1.bt2 ]];
@@ -54,4 +59,4 @@ samtools bamshuf $4.sorted.bam $4.shuffle
 
 }
 
-perform_alignment $1 $2 $3 $4 $5
+perform_alignment $1 $2 $3 $4 $TRIM

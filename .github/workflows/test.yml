@@ -1,0 +1,37 @@
+name: Pipeline test
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          mamba-version: "*"
+          channels: bioconda,conda-forge,defaults
+          channel-priority: strict
+          environment-file: environment.yml
+          activate-environment: custom-alignment-pipeline
+          use-mamba: true
+
+      - name: Cache conda packages
+        uses: actions/cache@v4
+        with:
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ hashFiles('environment.yml') }}
+          restore-keys: ${{ runner.os }}-conda-
+
+      - name: Run end-to-end pipeline test
+        run: bash test/run_test.sh

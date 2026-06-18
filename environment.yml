@@ -1,0 +1,11 @@
+name: custom-alignment-pipeline
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bowtie2>=2.5
+  - samtools>=1.17
+  - bioconductor-deseq2
+  - r-argparse
+  - python>=3.9
