@@ -1,4 +1,5 @@
 #! /bin/bash
+set -euo pipefail
 
 ## command line parameters
 # $1: Reference genome location (Bowtie2 index basename)
